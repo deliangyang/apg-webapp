@@ -3,6 +3,7 @@ var fs = require('fs')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -35,8 +36,20 @@ module.exports = {
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
+          loaders: {
+            css: 'vue-style-loader!css-loader',
+            less: 'vue-style-loader!css-loader!less-loader'
+          },
         }
+      },
+      
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+            use: ['css-loader?minimize','autoprefixer-loader', 'less-loader'],
+            fallback: 'style-loader'
+        })
       },
       {
         test: /\.vue$/,
@@ -73,5 +86,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('style.css')
+  ]
 }

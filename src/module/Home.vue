@@ -1,17 +1,18 @@
-<style lang="postcss">
+<style lang="less">
 
 </style>
 
 <template>
-    <div>hello world</div>
+    <div class="header">hello world</div>
 </template>
 
 <script>
-import api from '@/utils/api';
-
 export default {
     created() {
-        api.initBoot().then((res) => {
+        console.log(this);
+        this.$axios.get('/api/boot').then((res) => {
+            console.log(res);
+        }).catch((res) => {
             console.log(res);
         });
     }

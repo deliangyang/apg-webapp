@@ -1,1 +1,1 @@
-export const HOST = 'https://xcx.sourcedev.cc/api/';
+export const HOST = 'https://xcx.sourcedev.cc/';
