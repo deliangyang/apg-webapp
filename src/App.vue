@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 body {
   background-color: #f8f8f8;
 }
@@ -24,4 +24,5 @@ body {
 .van-cell__title .van-icon {
   font-size: 18px;
 }
+@import './styles/common.less';
 </style>

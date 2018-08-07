@@ -3,8 +3,10 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 import { router } from './router/index';
 import { $axios } from './utils/request';
+import VueLazyLoad from 'vue-lazyload';
 
 Vue.use(VueRouter);
+Vue.use(VueLazyLoad);
 Vue.prototype.$axios = $axios;
 
 new Vue({

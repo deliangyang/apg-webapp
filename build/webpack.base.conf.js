@@ -43,7 +43,14 @@ module.exports = {
           },
         }
       },
-      
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+            use: ['css-loader?minimize', 'autoprefixer-loader'],
+            fallback: 'style-loader'
+        }),
+        include: [resolve('src')]
+      },
       {
         test: /\.less$/,
         use: ExtractTextPlugin.extract({
