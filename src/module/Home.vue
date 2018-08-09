@@ -8,7 +8,7 @@
         background="#9767C9"
         color="#ffffff"
         text="足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。"
-        left-icon="https://img.yzcdn.cn/1.png"/>
+        left-icon=" "/>
 
         <div class="swiper">
             <van-swipe :autoplay="3000">
@@ -29,7 +29,7 @@
         <div class="category">
             <div class="category-item" v-for="(item, index) in categories" :key="index">
                 <div>
-                    <image :src="item.image" />
+                    <img :src="item.image" />
                 </div>
                 <div>
                     <span>{{item.title}}</span>
@@ -40,23 +40,23 @@
         <div class="ad-show">
             <div class="ad-left">
                 <div>
-                    <image src="../images/1_25.gif" />
+                    <img src="@/images/1_25.gif" />
                 </div>
             </div>
             <div class="ad-right">
                 <div>
-                    <image src="../images/1_22.gif" />
+                    <img src="@/images/1_22.gif" />
                 </div>
                 <div>
-                    <image src="../images/1_26.gif" />
+                    <img src="@/images/1_26.gif" />
                 </div>
             </div>
         </div>
 
-        <div class="product-list" v-for="(item, index) in productCategories" :key="index">
+        <div class="product-list" v-for="(item, index) in productCategoriesData" :key="index">
             <div class="category">
                 {{category.name}}
-                <image src="../images/1_22.png" />
+                <image src="@/images/1_22.png" />
             </div>
             <div class="recommend">
                 <div class="recommend-item" v-for="(item, index) in recommend[category.id]" :key="index">
@@ -134,6 +134,12 @@ export default {
             this.productCategories = res.data.productCategories;
         }).catch((res) => {
         });
+    },
+
+    computed: {
+        productCategoriesData: function() {
+            return this.productCategories;
+        }
     }
 };
 </script>
