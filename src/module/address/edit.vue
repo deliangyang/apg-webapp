@@ -18,7 +18,7 @@
 export default {
     data() {
         return {
-            areaList,
+            areaList: [],
             address: {},
             searchResult: [],
             addressId: 0,
@@ -45,14 +45,13 @@ export default {
             if (this.addressId) {
                 this.loadAddressDetail(this.addressId);
             }
-        })
+        });
     },
     created() {
-        let query = this.$router.query
-        this.addressId = query.id
-    }
-
-}
+        const query = this.$router.query;
+        this.addressId = query.id;
+    },
+};
 </script>
 
 <style lang="less">

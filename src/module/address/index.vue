@@ -25,7 +25,7 @@ export default {
         },
         loadAddress() {
             this.$axios.get('/api/address').then((res) => {
-                this.list = res.data
+                this.list = res.data;
             });
         }
     },

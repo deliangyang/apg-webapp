@@ -59,7 +59,8 @@
             <van-row>
                 <div class="recommend">
                     <van-col span="12" v-for="(item, index) in recommend[category.id]" :key="index">
-                        <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'">
+                        <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'"
+                            v-on:click="goToProductDetailPage(item.id)">
                             <div class="image-box">
                                 <img :src="item.cover" />
                             </div>
@@ -137,7 +138,14 @@ export default {
         }).catch((res) => {
         });
     },
-
+    methods: {
+        goToProductDetailPage(id) {
+            console.log(id);
+            this.$router.push({
+                path: '/product/detail/' + id,
+            });
+        },
+    },
     computed: {
         //
     }

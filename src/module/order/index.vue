@@ -28,7 +28,7 @@ export default {
             tabConfig: OrderTabList,
             active: 0,
             orders: [],
-        }
+        };
     },
     computed: {
         ordersData: function() {
@@ -42,9 +42,9 @@ export default {
     },
     methods: {
         loadOrders(query) {
-            this.$axios.get('/api/orders', {params: query}).then((res) => {
+            this.$axios.get('/api/orders', { params: query }).then((res) => {
                 res.data.data.forEach(element => {
-                    this.orders.push(element)
+                    this.orders.push(element);
                 });
             });
         }
@@ -55,7 +55,7 @@ export default {
     mounted() {
         this.$nextTick((res) => {
             this.loadOrders({});
-        })
+        });
     },
 };
 </script>

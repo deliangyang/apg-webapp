@@ -1,31 +1,11 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="shop">
-        <span>首页</span>
+    <van-tabbar v-model="currentActive" v-if="showTabbar">
+      <van-tabbar-item icon="shop" v-for="(item, index) in icon" :key="index" :url="'/#' + item.url">
+        <span>{{item.title}}</span>
         <img slot="icon" slot-scope="props"
-          :src="active === 0 ? icon[0].active : icon[0].normal"/>
-      </van-tabbar-item>
-      <van-tabbar-item icon="chat">
-        <span>海壳圈</span>
-        <img slot="icon" slot-scope="props" 
-          :src="active === 1 ? icon[1].active : icon[1].normal"/>
-      </van-tabbar-item>
-      <van-tabbar-item icon="chat">
-        <span>客服</span>
-        <img slot="icon" slot-scope="props" 
-          :src="active === 2 ? icon[2].active : icon[2].normal"/>
-      </van-tabbar-item>
-      <van-tabbar-item icon="chat">
-        <span>购物车</span>
-        <img slot="icon" slot-scope="props" 
-          :src="active === 3 ? icon[3].active : icon[3].normal"/>
-      </van-tabbar-item>
-      <van-tabbar-item icon="chat">
-        <span>个人中心</span>
-        <img slot="icon" slot-scope="props" 
-          :src="active === 4 ? icon[4].active : icon[4].normal"/>
+          :src="currentActive === index ? item.active : item.normal"/>
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -53,31 +33,75 @@ export default {
   },
   data() {
     return {
+      showTabbar: false,
       active: 0,
+      currentRouter: '/',
       icon: [
         {
+          title: '首页',
           normal: homeNormal,
-          active: homeActive
+          active: homeActive,
+          url: '/',
         },
         {
+          title: '海壳圈',
           normal: circleNormal,
-          active: circleActive
+          active: circleActive,
+          url: '/found/circle',
         },
         {
+          title: '客服',
           normal: service,
-          active: service
+          active: service,
+          url: '',
         },
         {
+          title: '购物车',
           normal: shoppingNormal,
-          active: shoppingActive
+          active: shoppingActive,
+          url: '/shopping/cart',
         },
         {
+          title: '个人中心',
           normal: userNormal,
-          active: userActive
+          active: userActive,
+          url: '/user/index',
         },
       ]
     };
   },
+  created(option) {
+    console.log(this.$route.path);
+  },
+  computed: {
+    currentActive: {
+      get() {
+        var path = this.$route.path;
+        if (path === '/user/index') {
+          return 4;
+        } else if (path === '/shopping/cart') {
+          return 3;
+        } else if (path === '/found/circle') {
+          return 1;
+        } else if (path === '/') {
+          return 0;
+        } else {
+          return 0;
+        }
+      },
+      set() {
+
+      }
+    },
+  },
+  showTabbar: function() {
+    var path = this.$route.path;
+    if (/^\/product\/detai\/\d+/.test(path)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 };
 </script>
 
