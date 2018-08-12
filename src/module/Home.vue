@@ -19,77 +19,79 @@
         </div>
 
         <div class="search-box">
-            <div class="search-item">
-                <input type="text" confirm-type="search" placeholder="搜索商品"
-                    :focus="search.focus"
-                    :value="keywords"/>
-            </div>
+            <van-search placeholder="请输入搜索商品" v-model="value" />
         </div>
 
         <div class="category">
-            <div class="category-item" v-for="(item, index) in categories" :key="index">
-                <div>
-                    <img :src="item.image" />
-                </div>
-                <div>
-                    <span>{{item.title}}</span>
-                </div>
-            </div>
+            <van-row>
+                <van-col span="6" class="category-item" v-for="(item, index) in categories" :key="index">
+                    <div class="category-image">
+                        <img :src="item.image"/>
+                    </div>
+                    <div class="category-title">{{item.title}}</div>
+                </van-col>
+            </van-row>
         </div>
 
         <div class="ad-show">
-            <div class="ad-left">
-                <div>
-                    <img src="@/images/1_25.gif" />
-                </div>
-            </div>
-            <div class="ad-right">
-                <div>
-                    <img src="@/images/1_22.gif" />
-                </div>
-                <div>
-                    <img src="@/images/1_26.gif" />
-                </div>
-            </div>
+            <van-row>
+                <van-col span="10">
+                    <div class="left">
+                        <img src="@/images/1_25.gif" />
+                    </div>
+                </van-col>
+                <van-col span="14">
+                    <div class="right-top">
+                        <img src="@/images/1_22.gif" />
+                    </div>
+                    <div class="right-bottom">
+                        <img src="@/images/1_26.gif" />
+                    </div>
+                </van-col>
+            </van-row>
         </div>
 
-        <div class="product-list" v-for="(item, index) in productCategoriesData" :key="index">
+        <div class="product-list" v-for="(category, index) in productCategories" :key="index">
             <div class="category">
                 {{category.name}}
-                <image src="@/images/1_22.png" />
+                <img src="@/images/1_22.png" />
             </div>
-            <div class="recommend">
-                <div class="recommend-item" v-for="(item, index) in recommend[category.id]" :key="index">
-                    <div class="image-box">
-                        <image :src="item.cover" />
-                    </div>
-                    <div class="product-title">
-                        <text>{{item.title}}</text>
-                    </div>
-                    <div class="product-amount">
-                        <text class="origin-amount">AU${{common.filter(item.amount)}}</text>
-                        <text class="vip-amount">AU${{common.vip_amount(item, userType)}}</text>
-                        <text class="aud_cny">(约￥{{common.aud_cny(item, userType, audCny)}})</text>
-                    </div>
-                    <div class="tag-info">
-                        <div v-if="item.is_hot" class="hot">畅销</div>
-                        <div v-if="item.tag" class="tag">{{item.tag}}</div>
-                    </div>
+            <van-row>
+                <div class="recommend">
+                    <van-col span="12" v-for="(item, index) in recommend[category.id]" :key="index">
+                        <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'">
+                            <div class="image-box">
+                                <img :src="item.cover" />
+                            </div>
+                            <div class="product-title">{{item.title}}</div>
+                            <div class="product-amount">
+                                <span class="origin-amount">AU$ {{item.amount}}</span>
+                                <span class="vip-amount">AU$ {{item.vip_amount}}</span>
+                                <span class="aud_cny">(约￥ {{item.aud_cny}})</span>
+                            </div>
+                            <div class="tag-info">
+                                <div v-if="item.is_hot" class="hot">畅销</div>
+                                <div v-if="item.tag" class="tag">{{item.tag}}</div>
+                            </div>
+                        </div>
+                    </van-col>
                 </div>
-            </div>
+            </van-row>
         </div>
-        <button class="chat-service" open-type="contact">进入客服会话</button>
     </div>
 </template>
 
 <script>
-import { Icon, NoticeBar, Swipe, SwipeItem } from 'vant';
+import { Icon, NoticeBar, Swipe, SwipeItem, Search, Row, Col } from 'vant';
 export default {
     components: {
         [NoticeBar.name]: NoticeBar,
         [Icon.name]: Icon,
         [Swipe.name]: Swipe,
-        [SwipeItem.name]: SwipeItem
+        [SwipeItem.name]: SwipeItem,
+        [Search.name]: Search,
+        [Row.name]: Row,
+        [Col.name]: Col,
     },
     data() {
         return {
@@ -137,9 +139,7 @@ export default {
     },
 
     computed: {
-        productCategoriesData: function() {
-            return this.productCategories;
-        }
+        //
     }
 };
 </script>
