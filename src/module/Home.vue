@@ -8,7 +8,7 @@
         background="#9767C9"
         color="#ffffff"
         text="足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。"
-        left-icon=" "/>
+        :left-icon="volumeIcon"/>
 
         <div class="swiper">
             <van-swipe :autoplay="3000">
@@ -53,7 +53,9 @@
 
         <div class="product-list" v-for="(category, index) in productCategories" :key="index">
             <div class="category">
-                {{category.name}}
+                <router-link :to="'/product/category/' + category.id">
+                    {{category.name}}
+                </router-link>
                 <img src="@/images/1_22.png" />
             </div>
             <van-row>
@@ -84,6 +86,7 @@
 
 <script>
 import { Icon, NoticeBar, Swipe, SwipeItem, Search, Row, Col } from 'vant';
+import volumeIcon from '@/images/volume.png';
 export default {
     components: {
         [NoticeBar.name]: NoticeBar,
@@ -98,6 +101,8 @@ export default {
         return {
             current: '/pages/index',
             hot: [],
+            volumeIcon: volumeIcon,
+            value: '',
             audCny: 5.0032,
             userType: 0,
             imageUrls: [],
@@ -126,16 +131,28 @@ export default {
     },
 
     mounted() {
-        this.$axios.get('/api/boot').then((res) => {
-            this.imageUrls = res.data.swiper;
-            this.categories = res.data.categories;
-            this.recommend = res.data.recommend;
-            this.hot = res.data.hot;
-            this.sysNotice = res.data.sysNotice;
-            this.sysNoticeInterval = res.data.sysNoticeInterval;
-            this.audCny = res.data.audCny;
-            this.productCategories = res.data.productCategories;
-        }).catch((res) => {
+        this.$nextTick((res) => {
+            this.$axios.get('/api/boot').then((res) => {
+                this.imageUrls = res.data.swiper;
+                this.categories = res.data.categories;
+                this.hot = res.data.hot;
+                this.sysNotice = res.data.sysNotice;
+                this.sysNoticeInterval = res.data.sysNoticeInterval;
+                this.audCny = res.data.audCny;
+                this.productCategories = res.data.productCategories;
+                this.recommend = {};
+                for (var item in res.data.recommend) {
+                    this.recommend[item] = res.data.recommend[item].map(element => {
+                        return {
+                            ...element,
+                            amount: (element.amount / 100).toFixed(2),
+                            vip_amount: (element.vip_amount / 100).toFixed(2),
+                            aud_cny: (element.vip_amount / 100).toFixed(2),
+                        };
+                    });
+                }
+            }).catch((res) => {
+            });
         });
     },
     methods: {
