@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { HOST } from './constant';
+import Vue from 'vue';
+import VueLocalStorage from 'vue-localstorage';
+
+Vue.use(VueLocalStorage);
 
 export const $axios = axios.create({
     baseURL: HOST,
@@ -23,5 +27,5 @@ $axios.interceptors.response.use(function(response) {
     return Promise.reject(error);
 });
 
-$axios.defaults.headers.common['Authorization'] = 'x';
+$axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.localStorage.get('Authorization');
 $axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
