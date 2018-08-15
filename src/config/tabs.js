@@ -1,6 +1,10 @@
 
 export const OrderTabList = [
     {
+        title: '全部',
+        status: 'all'
+    },
+    {
         title: '未付款',
         status: 'unpay'
     },

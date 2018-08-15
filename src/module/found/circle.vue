@@ -19,7 +19,7 @@
                         <div class="images" v-if="item.type === 2">
                             <div v-for="(images, idx) in item.extra.image" :key="idx">
                                 <div class="image-list">
-                                    <img v-for="(image, key) in images" @click="showImagePreview(index, idx, key)" :key="key" :src="image" />
+                                    <img v-for="(image, key) in images" @click="showImagePreview(index, idx, key)" :key="key" :src="image" v-lazy="image" />
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
                             <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'"
                                 v-on:click="goToProductDetailPage(item.id)">
                                 <div class="image-box">
-                                    <img :src="item.cover" />
+                                    <img :src="item.cover" v-lazy="item.cover"/>
                                 </div>
                                 <div class="product-title">{{item.title}}</div>
                                 <div class="product-amount">
@@ -49,7 +49,10 @@ export default {
     data() {
         return {
             keyword: '',
-            products: []
+            products: [],
+            page: 1,
+            loading: false,
+            finished: true,
         };
     },
     methods: {
@@ -63,6 +66,8 @@ export default {
             this.keyword = '';
         },
         searchProducts(params) {
+            this.loading = true;
+            this.finished = false;
             this.$axios.get('/api/search', { params: params }).then((res) => {
                 if (params && params.page === 1) {
                     this.products = [];
@@ -70,11 +75,19 @@ export default {
                 res.data.data.forEach(element => {
                     this.products.push(element);
                 });
+                this.loading = false;
+                this.finished = true;
             });
         },
         goToProductDetailPage(id) {
             this.$router.push({
                 path: '/product/detail/' + id,
+            });
+        },
+        onLoad() {
+            this.searchProducts({
+                keywords: this.keyword,
+                page: ++this.page,
             });
         },
     },

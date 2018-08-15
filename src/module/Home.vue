@@ -64,7 +64,7 @@
                         <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'"
                             v-on:click="goToProductDetailPage(item.id)">
                             <div class="image-box">
-                                <img :src="item.cover" />
+                                <img :src="item.cover" v-lazy="item.cover" />
                             </div>
                             <div class="product-title">{{item.title}}</div>
                             <div class="product-amount">
