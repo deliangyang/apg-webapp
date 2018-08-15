@@ -26,6 +26,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
+      title: '海壳直邮一代神器',
       filename: 'index.html',
       template: 'index.html',
       inject: true

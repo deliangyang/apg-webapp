@@ -1,5 +1,5 @@
 
-const OrderTabList = [
+export const OrderTabList = [
     {
         title: '未付款',
         status: 'unpay'
@@ -25,7 +25,3 @@ const OrderTabList = [
         status: 'finished',
     },
 ];
-
-export default {
-    OrderTabList
-};

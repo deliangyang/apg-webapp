@@ -1,8 +1,8 @@
 
-const utils = {};
+export const utils = {};
 
 utils.title = (title) => {
-    title = title || '海壳网-小程序后台';
+    title = title || '海壳直邮一代神器';
     window.document.title = title;
 };
 

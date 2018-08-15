@@ -19,7 +19,7 @@
         </div>
 
         <div class="search-box">
-            <van-search placeholder="请输入搜索商品" v-model="value" />
+            <van-search placeholder="请输入搜索商品" v-model="value" @search="onSearch"/>
         </div>
 
         <div class="category">
@@ -160,6 +160,11 @@ export default {
             console.log(id);
             this.$router.push({
                 path: '/product/detail/' + id,
+            });
+        },
+        onSearch(keyword) {
+            this.$router.push({
+                path: '/search?keyword=' + keyword,
             });
         },
     },
