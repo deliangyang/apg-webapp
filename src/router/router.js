@@ -19,4 +19,5 @@ export const routers = [
   { path: '/user/index', component: () => import('@/module/user/index.vue'), meta: { title: '个人中心' }},
   { path: '/user/feedback', component: () => import('@/module/user/feedback.vue'), meta: { title: '意见反馈' }},
   { path: '/found/circle', component: () => import('@/module/found/circle.vue'), meta: { title: '海壳圈' }},
+  { path: '/service', component: () => import('@/module/common/service.vue'), meta: { title: '客服' }},
 ];

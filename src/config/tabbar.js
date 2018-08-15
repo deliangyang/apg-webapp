@@ -1,6 +1,6 @@
 import homeNormal from '@/images/icon/home_grey.png';
 import homeActive from '@/images/icon/1_29.png';
-import circleNormal from '@/images/icon/1_32.png';
+import circleNormal from '@/images/icon/1_37.png';
 import circleActive from '@/images/icon/2_11.png';
 import service from '@/images/icon/1_32.png';
 import shoppingNormal from '@/images/icon/1_34.png';
@@ -25,7 +25,7 @@ export const TabbarConfig = [
       title: '客服',
       normal: service,
       active: service,
-      url: '',
+      url: '/service',
     },
     {
       title: '购物车',
