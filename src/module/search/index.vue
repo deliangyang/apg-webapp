@@ -9,39 +9,42 @@
         </div>
         <div>
             <van-row>
-                <div class="recommend">
-                    <van-col span="12" v-for="(item, index) in productsData" :key="index">
-                        <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'"
-                            v-on:click="goToProductDetailPage(item.id)">
-                            <div class="image-box">
-                                <img :src="item.cover" />
+                <van-list v-model="loading" :finished="finished" @load="onLoad" >
+                    <div class="recommend">
+                        <van-col span="12" v-for="(item, index) in productsData" :key="index">
+                            <div :class="index % 2 === 1 ? 'recommend-item recommend-item-1' : 'recommend-item recommend-item-2'"
+                                v-on:click="goToProductDetailPage(item.id)">
+                                <div class="image-box">
+                                    <img :src="item.cover" />
+                                </div>
+                                <div class="product-title">{{item.title}}</div>
+                                <div class="product-amount">
+                                    <span class="origin-amount">AU$ {{item.amount}}</span>
+                                    <span class="vip-amount">AU$ {{item.vip_amount}}</span>
+                                    <span class="aud_cny">(约￥ {{item.aud_cny}})</span>
+                                </div>
+                                <div class="tag-info">
+                                    <div v-if="item.is_hot" class="hot">畅销</div>
+                                    <div v-if="item.tag" class="tag">{{item.tag}}</div>
+                                </div>
                             </div>
-                            <div class="product-title">{{item.title}}</div>
-                            <div class="product-amount">
-                                <span class="origin-amount">AU$ {{item.amount}}</span>
-                                <span class="vip-amount">AU$ {{item.vip_amount}}</span>
-                                <span class="aud_cny">(约￥ {{item.aud_cny}})</span>
-                            </div>
-                            <div class="tag-info">
-                                <div v-if="item.is_hot" class="hot">畅销</div>
-                                <div v-if="item.tag" class="tag">{{item.tag}}</div>
-                            </div>
-                        </div>
-                    </van-col>
-                </div>
+                        </van-col>
+                    </div>
+                </van-list>
             </van-row>
         </div>
     </div>
 </template>
 
 <script>
-import { Search, Row, Col } from 'vant';
+import { Search, Row, Col, List } from 'vant';
 
 export default {
     components: {
         [Search.name]: Search,
         [Row.name]: Row,
-        [Col.name]: Col
+        [Col.name]: Col,
+        [List.name]: List
     },
     data() {
         return {

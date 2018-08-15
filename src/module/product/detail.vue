@@ -132,8 +132,9 @@ export default {
         onClickShoppingCart() {
             console.log(this.showBase);
             if (this.product.skus.length) {
-
+                //
             } else {
+                //
             }
         },
         onClickAddToShoppingCart() {
