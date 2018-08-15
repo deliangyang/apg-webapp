@@ -27,5 +27,8 @@ $axios.interceptors.response.use(function(response) {
     return Promise.reject(error);
 });
 
-$axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.localStorage.get('Authorization');
+const authorization = Vue.localStorage.get('Authorization');
+if (authorization) {
+    $axios.defaults.headers.common['Authorization'] = 'Bearer ' + authorization;
+}
 $axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

@@ -8,30 +8,26 @@
         </van-tabs>
 
         <div class="coupons">
-            <div class="coupon" v-for="(coupon, index) in couponsData" :key="index">
-                <zan-row>
-                    <zan-col col="6">
-                        <div class="discount-icon-box">
-                            <zan-icon class="discount-icon" type="discount"></zan-icon>
-                        </div>
-                    </zan-col>
-                    <zan-col col="18">
-                        <div>
-                            <div class="coupon-name">
-                                <span>{{item.coupon.name}}</span>
-                            </div>
-                            <div class="discount">
-                                <span class="currency">￥</span>
-                                <span>{{item.coupon.discount}}</span>
-                            </div>
-                            <div class="coupon-valid-time">
-                                {{item.coupon.start_at}} 至 {{item.coupon.expire_at}}
-                            </div>
-                        </div>
-                    </zan-col>
-                </zan-row>
+            <div class="coupon" v-for="(item, index) in couponsData" :key="index">
+                <div class="coupon-header">
+                    <div class="amount-info">
+                        <span class="flag">AU$</span>
+                        <span class="amount">{{item.discount}}</span>
+                    </div>
+                    <div class="amount-fill-up">
+                        <div>{{item.coupon.name}}</div>
+                        <div>(满${{item.fill_up}}可以使用)</div>
+                    </div>
+                    <div class="btn-suit-product">
+                        <button type="default" plain="true" size="mini">适用商品</button>
+                    </div>
+                </div>
+                <div class="coupon-info">
+                    <div>有效期：{{item.coupon.start_at}} ~ {{item.coupon.expire_at}}</div>
+                    <div>适用范围：{{item.coupon.description}}</div>
+                </div>
             </div>
-            <div v-if="coupons.length<=0" class="non-coupons">
+            <div v-if="coupons.length<=0" class="no-data">
                 <span>无优惠券~</span>
             </div>
         </div>
@@ -39,11 +35,14 @@
 </template>
 
 <script>
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs, Row, Col, Button } from 'vant';
 export default {
     components: {
         [Tab.name]: Tab,
-        [Tabs.name]: Tabs
+        [Tabs.name]: Tabs,
+        [Row.name]: Row,
+        [Col.name]: Col,
+        [Button.name]: Button,
     },
     data() {
         return {
@@ -76,7 +75,13 @@ export default {
     },
     computed: {
         couponsData: function() {
-            return [];
+            return this.coupons.map((element) => {
+                return {
+                    ...element,
+                    fill_up: (element.coupon.fill_up / 100).toFixed(2),
+                    discount: (element.coupon.discount / 100).toFixed(2),
+                };
+            });
         }
     },
     mounted() {
@@ -90,44 +95,74 @@ export default {
 <style lang="less">
 .coupon-container {
     .coupons {
-        padding: 10px 20px;
+        .coupon::before {
+            content: ' ';
+            position: absolute;
+            height: 30px;
+            width: 15px;
+            left: 0;
+            top: 55px;
+            background-color: #EFEFEF;
+            border-radius: 0 15px 15px 0;
+        }
+        .coupon::after {
+            content: ' ';
+            position: absolute;
+            height: 30px;
+            width: 15px;
+            right: 0;
+            top: 50px;
+            background-color: #EFEFEF;
+            border-radius: 15px 0 0 15px;
+        }
         .coupon {
-            padding: 20px;
-            margin: 20px 0;
+            position: relative;
+            margin-top: 10px;
+            padding: 15px 5px 15px 16px;
             background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 0 20px #ccc;
-            .coupon-valid-time {
-                font-size: 24px;
-                text-align: right;
-                color: #666;
-            }
-            .discount-icon-box {
-                text-align: center;
-                .discount-icon {
-                    margin-top: 24px;
-                    font-size: 90px;
-                    display: inline-block;
-                    color: #FB444B;
+            .coupon-header {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 10px;
+                .amount-info {
+                    width: 36%;
+                    text {
+                        color: #9961ce;
+                        font-size: 17px;
+                    }
+                    .amount {
+                        font-size: 30px;
+                    }
+                }
+                .amount-fill-up {
+                    width: 40%;
+                    font-size: 15px;
+                    color: #000000;
+                }
+                .btn-suit-product {
+                    width: 20%;
+                    text-align: right;
+                    button {
+                        margin-top: 10px;
+                        font-size: 10px;
+                        color: #9961ce;
+                        background-color: #ffffff;
+                        border-color: #9961ce;
+                    }
                 }
             }
-            .discount-name {
-                font-size: 40px;
-                color: #333;
-            }
-            .discount {
-                font-size: 80px;
-                color: #FB444B;
-                .currency {
-                    font-size: 40px;
-                }
+            .coupon-info {
+                border-top: 1px #AAAAAA dashed;
+                padding-top: 12px;
+                font-size: 10px;
+                color: #666666;
             }
         }
     }
     .non-coupons {
         text-align: center;
-        margin-top: 60px;
-        font-size: 32px;
+        margin-top: 30px;
+        font-size: 16px;
         color: #999;
     }
 }
