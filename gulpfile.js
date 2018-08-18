@@ -7,8 +7,8 @@ var config = {
     host: 'www.sourcedev.cc',
     port: 22,
     username: 'deliang',
-    privateKey: fs.readFileSync('C:\\Users\\Administrator\\.ssh\\id_ras1')
-    //privateKey: fs.readFileSync('/Users/ydl/.ssh/id_rsa')
+    //privateKey: fs.readFileSync('C:\\Users\\Administrator\\.ssh\\id_ras1')
+    privateKey: fs.readFileSync('/Users/ydl/.ssh/id_rsa')
 };
 
 var gulpSSH = new GulpSSH({

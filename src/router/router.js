@@ -20,4 +20,5 @@ export const routers = [
   { path: '/user/feedback', component: () => import('@/module/user/feedback.vue'), meta: { title: '意见反馈' }},
   { path: '/found/circle', component: () => import('@/module/found/circle.vue'), meta: { title: '海壳圈' }},
   { path: '/service', component: () => import('@/module/common/service.vue'), meta: { title: '客服' }},
+  { path: '/user/favorite', component: () => import('@/module/user/favorite.vue'), meta: { title: '我的收藏' }},
 ];
