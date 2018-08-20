@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HOST } from './constant';
+import { HOST, VERSION } from './constant';
 import Vue from 'vue';
 import VueLocalStorage from 'vue-localstorage';
 
@@ -9,7 +9,8 @@ export const $axios = axios.create({
     baseURL: HOST,
     timeout: 30000,
     headers: {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'app-version': VERSION,
     }
 });
 
