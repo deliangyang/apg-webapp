@@ -3,14 +3,19 @@
 </template>
 
 <script>
+
 export default {
     created() {
 
     },
     methods: {
         login() {
-            this.$axios.post('/api/wx/h5/login').then((res) => {
+            this.$axios.get('/api/wx/h5/login').then((res) => {
                 this.$localStorage.set('Authorization', res.data.accessToken);
+                window.location.href = '/#/user/index';
+            }).catch((res) => {
+                console.log(JSON.stringify(res));
+                return true;
             });
         },
     },

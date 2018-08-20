@@ -14,6 +14,7 @@
 <script>
 import { Cell, CellGroup, Icon, Tabbar, TabbarItem } from 'vant';
 import { TabbarConfig } from '@/config/tabbar';
+import { wxInit } from '@/utils/share';
 
 export default {
   components: {
@@ -30,6 +31,24 @@ export default {
     };
   },
   created() {
+  },
+  methods: {
+    share() {
+      var params = {
+        url: window.location.href,
+      };
+      this.$axios.post('/api/wx/share', params).then((res) => {
+        var data = res.data;
+        data.desc = document.title;
+        wxInit(data);
+      });
+    },
+  },
+  mounted() {
+    this.$nextTick((res) => {
+      //
+    });
+    this.share();
   },
   computed: {
     currentActive: {

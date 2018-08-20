@@ -1,7 +1,7 @@
 <template>
     <div class="shopping-cart">
         <div>
-            <van-checkbox-group v-model="result">
+            <van-checkbox-group v-model="result" @change="shoppingCartsChanged">
                 <div v-for="(shopping, index) in shoppingCartData" :key="index" v-if="shopping.showStatus > 0">
                     <van-cell-swipe :right-width="60" :on-close="onClose" :data-index="index">
                         <van-cell-group>
@@ -25,21 +25,28 @@
                 </div>
             </van-checkbox-group>
         </div>
+
+        <van-submit-bar :price="total" button-text="提交订单" currency="AU$ " @submit="onSubmit">
+            <van-checkbox v-model="checkedTotal" @change="choiceAll">全选</van-checkbox>
+        </van-submit-bar>
     </div>
 </template>
 
 <script>
-import { Card, CellSwipe, CellGroup, Row, Col, Checkbox, CheckboxGroup, Dialog } from 'vant';
+import { Card, CellSwipe, CellGroup, Row, Col, Checkbox, CheckboxGroup, Dialog, SubmitBar, Toast } from 'vant';
 import Vue from 'vue';
 Vue.use(Card).use(CellSwipe)
     .use(CellGroup).use(Row)
     .use(Col).use(Checkbox)
+    .use(SubmitBar)
     .use(CheckboxGroup).use(Dialog);
 export default {
     data() {
         return {
             shoppingCarts: [],
             result: [],
+            checkedTotal: false,
+            total: 0,
         };
     },
     methods: {
@@ -69,6 +76,47 @@ export default {
                 break;
             }
         },
+        onSubmit() {
+            var shoppingCartIds = [];
+            this.result.forEach((element) => {
+                shoppingCartIds.push(this.shoppingCarts[element].id);
+            });
+            if (shoppingCartIds.length <= 0) {
+                Toast('购物车不能为空');
+                return false;
+            }
+            this.$router.push({
+                path: '/order/confirm?ids=' + shoppingCartIds.join(','),
+            });
+        },
+        shoppingCartsChanged() {
+            this.shoppingCarts.forEach((element) => {
+                element.checked = false;
+            });
+            this.total = 0;
+            this.result.forEach((element) => {
+                this.shoppingCarts[element].checked = true;
+                this.total += this.shoppingCarts[element].amount;
+            });
+
+            if (this.result.length === this.shoppingCarts.length && this.result.length > 0) {
+                this.checkedTotal = true;
+            } else {
+                this.checkedTotal = false;
+            }
+        },
+        choiceAll() {
+            if (this.checkedTotal) {
+                var index = 0;
+                this.result = [];
+                this.total = 0;
+                this.shoppingCarts.forEach((element) => {
+                    element.checked = true;
+                    this.total += element.amount;
+                    this.result.push(index++);
+                });
+            }
+        }
     },
     mounted() {
         this.$nextTick((res) => {

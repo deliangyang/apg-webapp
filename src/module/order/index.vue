@@ -20,7 +20,7 @@
                     <div class="total-amount">
                         合计：<span>AU$ {{order.total_amount}}</span>
                     </div>
-                    <div class="btn-box">
+                    <div class="btn-box" v-if="order.status === 1">
                         <van-button size="small" type="danger" plain @click="cancelOrder(index)">取消订单</van-button>
                         <van-button size="small" type="danger" plain @click="payment(index)">立即支付</van-button>
                     </div>
@@ -144,7 +144,7 @@ export default {
             }
             .item {
                 .van-card {
-                    border-bottom: 1px solid #eeeeee;
+                    border-bottom: 2px solid #ffffff;
                 }
                 .van-card::last-child {
                     border-bottom: none;
